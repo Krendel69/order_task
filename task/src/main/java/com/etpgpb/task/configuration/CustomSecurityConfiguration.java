@@ -31,12 +31,6 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService)
         .passwordEncoder(new DefaultPasswordEncoder());
-        //.passwordEncoder(passwordEncoder);
-        //.passwordEncoder(bCryptPasswordEncoder())
-                /*.and()
-                .authenticationProvider(authenticationProvider())
-                .jdbcAuthentication()
-                .dataSource(dataSource);*/
     }
 
     @Override
@@ -49,17 +43,17 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/main")
+                .defaultSuccessUrl("/services")
                 .usernameParameter("username")
                 .passwordParameter("password")
+                .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .and()
-                .httpBasic();
+                .deleteCookies("JSESSIONID");
     }
 
 /*

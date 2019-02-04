@@ -1,5 +1,6 @@
 package com.etpgpb.task.services;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class DefaultPasswordEncoder implements PasswordEncoder {
@@ -10,6 +11,10 @@ public class DefaultPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return true;
+        if (encodedPassword != null && encodedPassword.length() != 0) {
+            return encodedPassword.contentEquals(rawPassword);
+        } else {
+            return false;
+        }
     }
 }

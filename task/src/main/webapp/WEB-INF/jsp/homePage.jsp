@@ -43,18 +43,41 @@
     </form:form>
 </sec:authorize>
 
-
-<h2>Services List</h2>
+<h2>Список услуг</h2>
 <table>
     <tr>
-        <td><strong>Name</strong></td>
+        <td><strong>Наименование</strong></td>
     </tr>
     <c:forEach items="${services}" var="item">
         <tr>
-            <td>${item.name}</td>
+            <security:authorize access="hasRole('ROLE_CUSTOMER')">
+                <td><a href="/service/${item.id}/order/add"> ${item.name}</a></td>
+            </security:authorize>
+            <security:authorize access="hasRole('ROLE_EXECUTOR')">
+                <td>${item.name}                <a href="/service/remove/${item.id}">Удалить</a></td>
+            </security:authorize>
         </tr>
     </c:forEach>
 </table>
-<a href="<c:url value='/logout' />">Click here to logout</a>
+
+<security:authorize access="hasRole('ROLE_CUSTOMER')">
+    <h2>Список заказов</h2>
+    <table>
+        <tr>
+            <td><strong>Идентификатор</strong></td>
+            <td><strong>Услуга</strong></td>
+            <td><strong>Инициатор</strong></td>
+        </tr>
+        <c:forEach items="${orders}" var="item">
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.service.name}</td>
+                <td>${id.user.name}</td>
+                <td><a href="/orders/${item.id}/apply">Принять</a> / <a href="/orders/${item.id}/decline"></a></td>
+            </tr>
+        </c:forEach>
+    </table>
+</security:authorize>
+<a href="<c:url value='/logout' />">Выйти</a>
 </body>
 </html>

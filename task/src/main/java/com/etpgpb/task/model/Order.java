@@ -19,8 +19,11 @@ public class Order extends AbstractPersistable<Long> {
     @JoinColumn(name = "User_id")
     private User user;
 
-    public Order(OrderStatus status, Service service, User user) {
-        this.status = status;
+    public Order() {
+    }
+
+    public Order(Service service, User user) {
+        this.status = OrderStatus.NEW;
         this.service = service;
         this.user = user;
     }

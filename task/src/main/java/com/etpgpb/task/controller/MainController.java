@@ -20,8 +20,7 @@ import java.security.Principal;
 public class MainController {
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
-    public String index(Principal principal, Model model) {
-
+    public String index(Model model) {
         String message = "Hello Spring Boot + JSP";
         model.addAttribute("message", message);
         return "index";
