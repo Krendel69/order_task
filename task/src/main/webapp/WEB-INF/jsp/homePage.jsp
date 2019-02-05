@@ -60,23 +60,52 @@
     </c:forEach>
 </table>
 
+
 <security:authorize access="hasRole('ROLE_CUSTOMER')">
     <h2>Список заказов</h2>
     <table>
         <tr>
             <td><strong>Идентификатор</strong></td>
             <td><strong>Услуга</strong></td>
-            <td><strong>Инициатор</strong></td>
+                <td><strong>Статус</strong></td>
         </tr>
         <c:forEach items="${orders}" var="item">
             <tr>
                 <td>${item.id}</td>
                 <td>${item.service.name}</td>
-                <td>${id.user.name}</td>
-                <td><a href="/orders/${item.id}/apply">Принять</a> / <a href="/orders/${item.id}/decline"></a></td>
+                <td><strong>${item.status}</strong></td>
             </tr>
         </c:forEach>
     </table>
+</security:authorize>
+
+<security:authorize access="hasRole('ROLE_EXECUTOR')">
+<h2>Список заказов</h2>
+<table>
+    <tr>
+        <td><strong>Идентификатор</strong></td>
+        <td><strong>Услуга</strong></td>
+        <td><strong>Инициатор</strong></td>
+    </tr>
+    <c:forEach items="${orders}" var="item">
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.service.name}</td>
+                <td><strong>${item.status}</strong></td>
+                <td>${item.user.login}</td>
+                <td>
+                    <form action="/orders/${item.id}" method="post">
+                        <label>
+                            <input hidden type="text" name="orderId" value="${item.id}">
+                        </label>
+                        <button type="submit" name="action" value="apply">Принять</button>
+                        <button type="submit" name="action" value="decline">Отказать</button>
+                        <sec:csrfInput/>
+                    </form>
+                </td>
+        </tr>
+    </c:forEach>
+</table>
 </security:authorize>
 <a href="<c:url value='/logout' />">Выйти</a>
 </body>
