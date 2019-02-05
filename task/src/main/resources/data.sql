@@ -1,4 +1,5 @@
 insert into roles values (1, 'ROLE_EXECUTOR')
 insert into roles values (2, 'ROLE_CUSTOMER')
-insert into users values (1, 'Executor', 'pass1',1)
-insert into users values (2, 'Customer', 'pass2',2)
+insert into users values (1, 'Executor', 'Executor',1)
+insert into users values (2, 'Customer', 'Customer',2)
+insert into users values (3, 'Customer2', 'Customer2',2)
