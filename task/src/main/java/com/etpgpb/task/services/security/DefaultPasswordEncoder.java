@@ -1,6 +1,5 @@
-package com.etpgpb.task.services;
+package com.etpgpb.task.services.security;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class DefaultPasswordEncoder implements PasswordEncoder {

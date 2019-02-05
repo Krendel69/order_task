@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Spring5 MVC Hibernate Demo</title>
+    <title>Task for interview</title>
     <style type="text/css">
         .error {
             color: red;
@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-<h1>Input Form</h1> for <security:authentication property="principal.username" />
+<strong>Пользователь: <security:authentication property="principal.username"/> </strong>
 
 <sec:authorize access="hasRole('ROLE_EXECUTOR')">
     <form:form action="/service" method="post" modelAttribute="service">
@@ -48,13 +48,13 @@
     <tr>
         <td><strong>Наименование</strong></td>
     </tr>
-    <c:forEach items="${services}" var="item">
+    <c:forEach items="${mainPageDto.services}" var="item">
         <tr>
             <security:authorize access="hasRole('ROLE_CUSTOMER')">
                 <td><a href="/service/${item.id}/order/add"> ${item.name}</a></td>
             </security:authorize>
             <security:authorize access="hasRole('ROLE_EXECUTOR')">
-                <td>${item.name}                <a href="/service/remove/${item.id}">Удалить</a></td>
+                <td>${item.name}                <a href="/service/${item.id}/remove">Удалить</a></td>
             </security:authorize>
         </tr>
     </c:forEach>
@@ -69,7 +69,7 @@
             <td><strong>Услуга</strong></td>
                 <td><strong>Статус</strong></td>
         </tr>
-        <c:forEach items="${orders}" var="item">
+        <c:forEach items="${mainPageDto.orders}" var="item">
             <tr>
                 <td>${item.id}</td>
                 <td>${item.service.name}</td>
@@ -87,14 +87,14 @@
         <td><strong>Услуга</strong></td>
         <td><strong>Инициатор</strong></td>
     </tr>
-    <c:forEach items="${orders}" var="item">
+    <c:forEach items="${mainPageDto.orders}" var="item">
         <tr>
             <td>${item.id}</td>
             <td>${item.service.name}</td>
                 <td><strong>${item.status}</strong></td>
                 <td>${item.user.login}</td>
                 <td>
-                    <form action="/orders/${item.id}" method="post">
+                    <form action="<c:url value="/orders/process"/>" method="post">
                         <label>
                             <input hidden type="text" name="orderId" value="${item.id}">
                         </label>
